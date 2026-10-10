@@ -1,0 +1,11 @@
+**/node_modules/
+frontend/dist/
+local-db/
+*.log
+node-v*.exe
+mongodb-*.zip
+mongodb-win*/
+server/config/appdetails.json
+server/config/production.json
+server/keep.txt
+.env
