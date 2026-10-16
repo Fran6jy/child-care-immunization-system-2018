@@ -99,6 +99,7 @@
 </template>
 
 <script>
+import demoStorage from '../services/DemoStorage'
 import {LoaderMixin} from '../mixins/LoaderMixin'
 import Functions from '../services/Functions'
 
@@ -299,10 +300,10 @@ export default {
           setTimeout(() => {
             this.$router.push({name: 'AddChildren'})
           }, 2000)
-          localStorage.setItem('useParentAdd', 'yes')
-          localStorage.setItem('parentAddress',
+          demoStorage.setItem('useParentAdd', 'yes')
+          demoStorage.setItem('parentAddress',
           response.data.parentDetails.address)
-          localStorage.setItem('parentID', response.data.parentDetails._id)
+          demoStorage.setItem('parentID', response.data.parentDetails._id)
         } catch (error) {
           this.error = error.response.data.error
           this.createError = error.response.data.error_parentError

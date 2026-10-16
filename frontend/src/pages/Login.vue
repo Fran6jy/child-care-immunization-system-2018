@@ -16,6 +16,7 @@
                     <h3 class="panel-title"><b class="text-center">Immu Adminstrator Login</b></h3>
                 </div>
                 <div class="panel-body">
+                    <p v-if="isDemo"><strong>Public demo login</strong><br>demo@example.test / DemoPass2018!</p>
                     <form role="form">
                         <fieldset>
                             <div class="form-group" :class="{hasError: loginEmailError}">
@@ -51,8 +52,9 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Immunization App',
-      loginEmail: '',
-      loginPass: '',
+      isDemo: process.env.DEMO_MODE === 'true',
+      loginEmail: process.env.DEMO_MODE === 'true' ? 'demo@example.test' : '',
+      loginPass: process.env.DEMO_MODE === 'true' ? 'DemoPass2018!' : '',
       loginEmailError: '',
       loginPassError: '',
       loginSuccess: '',

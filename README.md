@@ -2,7 +2,15 @@
 
 An archived final-year project by **Francis O. Babatunde** (Information and Communication Science, University of Ilorin, August 2018). The case study was the University of Ilorin Teaching Hospital (UITH) immunization unit in Nigeria.
 
-This repository shows what a small health-records web application looked like in 2018. It is published for historical and educational study. It is **not** a clinical system, and it must never hold real patient data or be exposed to the public internet.
+This repository shows what a small health-records web application looked like in 2018. It is published for historical and educational study. It is **not** a clinical system. Never put real patient data into either the local app or the public demo. The original Express/MongoDB server is for localhost study only.
+
+## Live 2018 comparison demo
+
+**[Open the public demo](https://child-care-immunization-2018.vercel.app/)**. The login fields are prefilled with the fictional account `demo@example.test` / `DemoPass2018!`.
+
+This Vercel deployment preserves the 2018 Vue interface while replacing its API with a browser-only fixture adapter. It starts with one fictional parent, child, and immunization. You can explore the screens and try record actions; changes exist only in the current browser tab and reset on refresh. No MongoDB server, real authentication, or patient data is deployed. A banner on every page identifies it as a demonstration.
+
+The Vercel project serves a prebuilt static bundle. To redeploy it, build `frontend/` with Node 8 (`node build/build.js`), copy `frontend/vercel.json` into `frontend/dist/`, then run `vercel deploy --prod` from `frontend/dist/` while linked to the Vercel project. The historical backend is never part of this deployment.
 
 ## Why it was built
 
@@ -36,7 +44,7 @@ The frontend is a Vue 2 application built with Webpack 3. The backend uses Expre
 - `server/` — Express routes, controllers, models, and database configuration.
 - `server/scripts/seed-local-admin.js` — one-time local bootstrap helper added for this publication.
 
-## Run it locally
+## Run the historical backend locally
 
 These instructions reproduce the archived app; they do not make it safe for deployment. Use an isolated development machine or VM and **fictional data only**. The bundled Windows `bcrypt` binary from 2018 required Node 8.17.0 during restoration. Current Node releases do not load that binary. Node 8 and MongoDB 4.4 are both end-of-life, so keep every service bound to localhost.
 
@@ -57,9 +65,9 @@ These instructions reproduce the archived app; they do not make it safe for depl
    node .\scripts\seed-local-admin.js
    ```
 
-5. In `frontend/`, build with Node 8 (`node build/build.js`). Serve `frontend/dist/` on `127.0.0.1:8080`, for example with `python -m http.server 8080 --bind 127.0.0.1`. Open `http://127.0.0.1:8080/` and sign in with the demo account.
+5. In `frontend/`, run the Vue development server with Node 8 (`npm run dev`). Open `http://127.0.0.1:8080/` and sign in with the account seeded above. This development build calls the local API.
 
-The API health route is `http://127.0.0.1:3001/api`. The frontend's original API client points to `http://localhost:3001/api/`. A simple static server cannot serve a Vue history route after a direct refresh; navigate through the UI. Start MongoDB before the API, because the legacy server does not recover cleanly from an initial connection failure.
+The API health route is `http://127.0.0.1:3001/api`. The frontend's original API client points to `http://localhost:3001/api/`. The public Vercel demo has a history-route rewrite so direct links work. Start MongoDB before the API, because the legacy server does not recover cleanly from an initial connection failure.
 
 To use a different local database, set `MONGODB_URI` before starting the API and the seed script. The seed script refuses non-localhost URIs.
 
@@ -67,7 +75,7 @@ To use a different local database, set `MONGODB_URI` before starting the API and
 
 To make a responsible public archive, this copy excludes the original production database credentials, the original JWT secret, an old scratch file containing a token, the local demo database, downloaded runtimes, built assets, unused images with unclear reuse rights, and `node_modules`. The API now reads its JWT secret from `JWT_SECRET` and its database URL from `MONGODB_URI` (defaulting to the original localhost development URL). The bootstrap script above was added because the original registration endpoint requires an existing administrator token.
 
-These are publication and reproducibility changes, not a claim that the application has been modernized.
+The Vercel demo adds a fictional in-memory API adapter and a visible archive banner. These are publication and reproducibility changes, not a claim that the application has been modernized.
 
 ## Known limitations and study questions
 

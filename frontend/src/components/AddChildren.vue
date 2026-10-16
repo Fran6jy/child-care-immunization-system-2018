@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import demoStorage from '../services/DemoStorage'
 import {LoaderMixin} from '../mixins/LoaderMixin'
 import Functions from '../services/Functions'
 import {DataMixin} from '../mixins/DataMixin'
@@ -258,7 +259,7 @@ export default {
       }
     },
     sameAddressCheck () {
-      var getValue = localStorage.getItem('useParentAdd')
+      var getValue = demoStorage.getItem('useParentAdd')
       if (getValue === 'yes') {
         this.sameAddress = 'yes'
         this.showAddressChooser = true
@@ -267,14 +268,14 @@ export default {
       }
     },
     clearLocal () {
-      localStorage.setItem('useParentAdd', 'no')
-      localStorage.setItem('parentAddress', '')
-      localStorage.setItem('parentID', '')
+      demoStorage.setItem('useParentAdd', 'no')
+      demoStorage.setItem('parentAddress', '')
+      demoStorage.setItem('parentID', '')
     },
     confirmAddAndFixIn () {
       if (this.sameAddress === 'yes') {
       this.showAddressInput = false
-      var parentAdd = localStorage.getItem('parentAddress')
+      var parentAdd = demoStorage.getItem('parentAddress')
       this.address = parentAdd
       } else if (this.sameAddress === 'no') {
         this.showAddressInput = true
@@ -295,7 +296,7 @@ export default {
       this.$router.push({name: 'AddParents'})
     },
     autoChoseParent () {
-      var check = localStorage.getItem('parentID')
+      var check = demoStorage.getItem('parentID')
       if (check.length) {
         this.parent = check
         this.rechoseDiable = true 
